@@ -7,6 +7,6 @@ import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://recipes.willjackson.uk',
+    site: 'https://willjacksonuk.github.io',
     integrations: [mdx(), sitemap(), icon()],
 });
