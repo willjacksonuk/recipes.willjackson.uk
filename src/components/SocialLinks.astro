@@ -1,0 +1,37 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="social-links">
+    <a href="https://www.linkedin.com/in/wejackson/" target="_blank">
+        <span class="sr-only">Follow me on Instagram</span>
+        <Icon name="mdi:linkedin" />
+    </a>
+    <a href="https://www.instagram.com/willjackson.uk" target="_blank">
+        <span class="sr-only">Follow me on Instagram</span>
+        <Icon name="mdi:instagram" />
+    </a>
+    <a href="https://github.com/willjacksonuk" target="_blank">
+        <span class="sr-only">Go to my GitHub profile</span>
+        <Icon name="mdi:github" />
+    </a>
+    <a href="https://www.flickr.com/photos/willmx/" target="_blank">
+        <span class="sr-only">See my photography on Flickr</span>
+        <Icon name="mdi:flickr" />
+    </a>
+</div>
+<style>
+    .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1em;
+        margin-top: 1em;
+    }
+    .social-links a {
+        text-decoration: none;
+        color: rgb(var(--gray));
+    }
+    .social-links a:hover {
+        color: rgb(var(--gray-dark));
+    }
+</style>
