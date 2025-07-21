@@ -1,17 +1,17 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
 import { SITE_TITLE } from "../consts";
-import SocialLinks from "./SocialLinks.astro";
 ---
 
 <header>
 	<nav>
 		<h2><a href="/">{SITE_TITLE}</a></h2>
-		<div class="internal-links">
-			<HeaderLink href="/">Recipes</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
+		<div class="nav-right">
+			<div class="internal-links">
+				<HeaderLink href="/">Recipes</HeaderLink>
+				<HeaderLink href="/about">About</HeaderLink>
+			</div>
 		</div>
-		<SocialLinks />
 	</nav>
 </header>
 <style>
@@ -45,5 +45,29 @@ import SocialLinks from "./SocialLinks.astro";
 	nav a.active {
 		text-decoration: none;
 		border-bottom-color: var(--accent);
+	}
+	.nav-right {
+		padding: 0 1em;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+	@media (max-width: 720px) {
+		nav {
+			flex-direction: column;
+			align-items: flex-start;
+			padding: 1em 0;
+		}
+
+		.nav-right {
+			flex-direction: column;
+			align-items: flex-start;
+			padding: 0;
+		}
+
+		.internal-links a {
+			gap: 0.5em;
+			padding: 1em 0.75em;
+		}
 	}
 </style>
