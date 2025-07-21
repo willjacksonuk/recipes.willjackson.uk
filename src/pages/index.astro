@@ -17,9 +17,17 @@ const posts = (await getCollection("recipes")).sort(
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
+			main {
+				width: calc(100% - 2em);
+				max-width: 100%;
+				margin: 0;
+			}
 			section {
-				padding-top: 2rem;
-				padding-bottom: 2rem;
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 1em;
+				color: rgb(var(--gray-dark));
 			}
 			ul {
 				display: flex;
@@ -55,9 +63,13 @@ const posts = (await getCollection("recipes")).sort(
 				display: block;
 			}
 			.title {
-				margin: 0;
-				color: rgb(var(--black));
+				margin-bottom: 1em;
+				padding: 1em 0;
+				text-align: left;
 				line-height: 1;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
 			}
 			.date {
 				margin: 0;
@@ -91,7 +103,10 @@ const posts = (await getCollection("recipes")).sort(
 		<Header />
 		<main>
 			<section>
-				<h1>No olives. No spice. Chop chop!</h1>
+				<div class="title">
+					<h1>No olives. No spice. Chop chop!</h1>
+					<hr />
+				</div>
 				<p>
 					Your destination for simple, inoffensive cooking that
 					celebrates eggs, comfort desserts like crème brûlée, and
@@ -101,7 +116,6 @@ const posts = (await getCollection("recipes")).sort(
 					Proceed… cautiously.
 				</p>
 			</section>
-			<hr />
 			<section>
 				<ul>
 					{
@@ -113,7 +127,7 @@ const posts = (await getCollection("recipes")).sort(
 										<Image width={720} height={360} src={post.data.heroImage} alt="" />
 									)}
 										*/}
-									<h4 class="title">{post.data.title}</h4>
+									<h2>{post.data.title}</h4>
 									<p class="date">
 										<FormattedDate
 											date={post.data.pubDate}
@@ -126,6 +140,7 @@ const posts = (await getCollection("recipes")).sort(
 				</ul>
 			</section>
 		</main>
+
 		<Footer />
 	</body>
 </html>
