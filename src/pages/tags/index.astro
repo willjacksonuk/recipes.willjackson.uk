@@ -1,34 +1,46 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { SITE_TITLE } from '../../consts';
-import { getCollection } from 'astro:content';
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_TITLE } from "../../consts";
+import { getCollection } from "astro:content";
 
-const posts = await getCollection('recipes');
+const posts = await getCollection("recipes");
 const tagMap = new Map<string, number>();
 
-posts.forEach(post => {
-  post.data.tags?.forEach(tag => {
+posts.forEach((post) => {
+  post.data.tags?.forEach((tag) => {
     tagMap.set(tag, (tagMap.get(tag) || 0) + 1);
   });
 });
 
 const tags = Array.from(tagMap.entries()).sort(([a], [b]) =>
-  a.localeCompare(b)
+  a.localeCompare(b),
 );
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={`Tags | ${SITE_TITLE}`} description="Browse all tags used in recipes." />
+    <BaseHead
+      title={`Tags | ${SITE_TITLE}`}
+      description="Browse all tags used in recipes."
+    />
     <style>
+      main {
+        width: calc(100% - 2em);
+        max-width: 100%;
+        margin: 0;
+      }
+      section {
+        width: 720px;
+        max-width: calc(100% - 2em);
+        margin: auto;
+        padding: 1em;
+        color: rgb(var(--gray-dark));
+      }
       h1 {
         padding-bottom: 2rem;
-      }
-      main {
-        width: 960px;
       }
       ul {
         display: flex;
@@ -75,7 +87,9 @@ const tags = Array.from(tagMap.entries()).sort(([a], [b]) =>
               <li>
                 <a href={`/tags/${tag}/`}>
                   <h3 class="title">{tag}</h3>
-                  <p class="count">{count} recipe{count !== 1 ? 's' : ''}</p>
+                  <p class="count">
+                    {count} recipe{count !== 1 ? "s" : ""}
+                  </p>
                 </a>
               </li>
             ))
