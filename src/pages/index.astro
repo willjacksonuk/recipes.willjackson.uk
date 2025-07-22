@@ -30,7 +30,7 @@ const tags = Array.from(tagMap.keys()).sort((a, b) => a.localeCompare(b));
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
 			.recipe-item {
-				padding-bottom: 1rem;;
+				padding-bottom: 1rem;
 			}
 			.tag-list {
 				display: flex;
@@ -47,15 +47,18 @@ const tags = Array.from(tagMap.keys()).sort((a, b) => a.localeCompare(b));
 				border-width: 1px;
 				border-radius: 9999px;
 				border-color: var(--accent);
-				color: var(--accent); 
+				color: var(--accent);
 				font-size: 0.9rem;
 				line-height: 1.7;
+			}
+			.view-all-button {
+				padding-top: 1rem;
 			}
 			.intro-section {
 				display: flex;
 				flex-direction: column;
 				gap: 2rem;
-				padding-bottom: 4rem;
+				padding-bottom: 1rem;
 			}
 			.intro-text {
 				text-align: justify;
@@ -120,13 +123,6 @@ const tags = Array.from(tagMap.keys()).sort((a, b) => a.localeCompare(b));
 				margin: 0;
 				color: rgb(var(--gray));
 			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
 			@media (max-width: 720px) {
 				ul {
 					gap: 0.5em;
@@ -172,23 +168,27 @@ const tags = Array.from(tagMap.keys()).sort((a, b) => a.localeCompare(b));
 			<section>
 				<ul>
 					{
-						posts.map((post) => (
-							<li class="recipe-item">
+						posts.slice(0, 5).map((post) => (
+							<li class="recipe-item" key={post.id}>
 								<a href={`/recipes/${post.id}/`}>
 									{/* Recipe image, title, date etc */}
 									<h2>{post.data.title}</h2>
 								</a>
 
-								{/* Tags outside the main link */}
 								<div class="tag-list">
 									{post.data.tags?.map((tag) => (
-										<a href={`/tags/${tag}/`}>{tag}</a>
+										<a href={`/tags/${tag}/`} key={tag}>
+											{tag}
+										</a>
 									))}
 								</div>
 							</li>
 						))
 					}
 				</ul>
+				<div class="view-all-button">
+					<a href="/recipes">View All Recipes</a>
+				</div>
 			</section>
 		</main>
 
