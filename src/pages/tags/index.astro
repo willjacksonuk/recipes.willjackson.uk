@@ -1,0 +1,88 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE } from '../../consts';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('recipes');
+const tagMap = new Map<string, number>();
+
+posts.forEach(post => {
+  post.data.tags?.forEach(tag => {
+    tagMap.set(tag, (tagMap.get(tag) || 0) + 1);
+  });
+});
+
+const tags = Array.from(tagMap.entries()).sort(([a], [b]) =>
+  a.localeCompare(b)
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`Tags | ${SITE_TITLE}`} description="Browse all tags used in recipes." />
+    <style>
+      h1 {
+        padding-bottom: 2rem;
+      }
+      main {
+        width: 960px;
+      }
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      ul li {
+        width: calc(20% - 1rem);
+      }
+      .count {
+        font-size: 0.9em;
+        color: rgb(var(--gray));
+        margin: 0.25em 0 0;
+      }
+      ul li a {
+        text-decoration: none;
+        display: block;
+        transition: 0.2s ease;
+      }
+      ul li a:hover .title {
+        color: rgb(var(--accent));
+      }
+      @media (max-width: 720px) {
+        ul {
+          gap: 0.5em;
+        }
+        ul li {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section>
+        <h1>Browse Tags</h1>
+        <ul>
+          {
+            tags.map(([tag, count]) => (
+              <li>
+                <a href={`/tags/${tag}/`}>
+                  <h3 class="title">{tag}</h3>
+                  <p class="count">{count} recipe{count !== 1 ? 's' : ''}</p>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,98 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE } from '../../consts';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('recipes');
+  const tags = new Set(posts.flatMap((post) => post.data.tags || []));
+  return Array.from(tags).map((tag) => ({
+    params: { tag },
+  }));
+}
+
+const { tag } = Astro.params;
+const allPosts = await getCollection('recipes');
+const posts = allPosts
+  .filter((post) => post.data.tags?.includes(tag))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`${tag} Recipes | ${SITE_TITLE}`} description={`Recipes tagged with "${tag}".`} />
+    <style>
+      h1 {
+        padding-bottom: 2rem;
+      }
+      main {
+        width: 960px;
+      }
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      ul li {
+        width: calc(50% - 1rem);
+      }
+      .count {
+        font-size: 0.9em;
+        color: rgb(var(--gray));
+        margin: 0.25em 0 0;
+      }
+      ul li a {
+        text-decoration: none;
+        display: block;
+        transition: 0.2s ease;
+      }
+      ul li a:hover .title {
+        color: rgb(var(--accent));
+      }
+      @media (max-width: 720px) {
+        ul {
+          gap: 0.5em;
+        }
+        ul li {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section>
+        <h1>Recipes tagged with “{tag}”</h1>
+        {
+          posts.length > 0 ? (
+            <ul>
+              {
+                posts.map((post) => (
+                  <li>
+                    <a href={`/recipes/${post.id}/`}>
+                      {post.data.heroImage && (
+                        <Image width={720} height={360} src={post.data.heroImage} alt="" />
+                      )}
+                      <h3 class="title">{post.data.title}</h3>
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          ) : (
+            <p>No recipes found for this tag.</p>
+          )
+        }
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
