@@ -46,8 +46,10 @@ function formatTag(str: string) {
       description={`Recipes tagged with "${tag}".`}
     />
     <style>
-      .recipe-list {
-        padding-top: 1rem;
+      main {
+        width: calc(100% - 2em);
+        max-width: 100%;
+        margin: 0;
       }
       section {
         width: 720px;
@@ -56,13 +58,14 @@ function formatTag(str: string) {
         padding: 1em;
         color: rgb(var(--gray-dark));
       }
-     h1 {
-        margin: 0 0 0.5em 0;
+      .title {
+        margin-bottom: 1em;
+        padding: 1em 0;
+        text-align: left;
+        line-height: 1;
       }
-      main {
-        width: calc(100% - 2em);
-        max-width: 100%;
-        margin: 0;
+      .title h1 {
+        margin: 0 0 0.5em 0;
       }
       ul {
         display: flex;
@@ -73,20 +76,21 @@ function formatTag(str: string) {
         padding: 0;
       }
       ul li {
-        width: calc(50% - 1rem);
+        width: calc(30% - 1rem);
       }
-      .count {
-        font-size: 0.9em;
-        color: rgb(var(--gray));
-        margin: 0.25em 0 0;
-      }
-      ul li a {
+      ul li * {
         text-decoration: none;
-        display: block;
         transition: 0.2s ease;
       }
-      ul li a:hover .title {
-        color: rgb(var(--accent));
+      ul li img {
+        margin-bottom: 0.5rem;
+        border-radius: 12px;
+      }
+      ul li a {
+        display: block;
+      }
+      .count {
+        margin: 0;
       }
       @media (max-width: 720px) {
         ul {
@@ -94,6 +98,7 @@ function formatTag(str: string) {
         }
         ul li {
           width: 100%;
+          text-align: center;
         }
       }
     </style>
@@ -102,23 +107,16 @@ function formatTag(str: string) {
     <Header />
     <main>
       <section>
-        <h1>{formatTag(tag)} Recipes</h1>
-        <hr />
+        <div class="title">
+          <h1>{formatTag(tag)} Recipes</h1>
+        </div>
         {
           posts.length > 0 ? (
             <ul class="recipe-list">
               {posts.map((post) => (
                 <li>
                   <a href={`/recipes/${post.id}/`}>
-                    {post.data.heroImage && (
-                      <Image
-                        width={720}
-                        height={360}
-                        src={post.data.heroImage}
-                        alt=""
-                      />
-                    )}
-                    <h3 class="title">{post.data.title}</h3>
+                    <h3>{post.data.title}</h3>
                   </a>
                 </li>
               ))}
