@@ -119,6 +119,9 @@ const tags = Array.from(tagMap.keys()).sort((a, b) => a.localeCompare(b));
 			.title h1 {
 				margin: 0 0 0.5em 0;
 			}
+			h2 {
+				padding-bottom: 2rem;
+			}
 			.date {
 				margin: 0;
 				color: rgb(var(--gray));
@@ -166,13 +169,14 @@ const tags = Array.from(tagMap.keys()).sort((a, b) => a.localeCompare(b));
 				<hr />
 			</section>
 			<section>
+				<h2>Latest Recipes</h2>
 				<ul>
 					{
 						posts.slice(0, 5).map((post) => (
 							<li class="recipe-item" key={post.id}>
 								<a href={`/recipes/${post.id}/`}>
 									{/* Recipe image, title, date etc */}
-									<h2>{post.data.title}</h2>
+									<h3>{post.data.title}</h3>
 								</a>
 
 								<div class="tag-list">
