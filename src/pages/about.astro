@@ -1,0 +1,32 @@
+---
+import Layout from "../layouts/Page.astro";
+import AboutHeroImage from "../assets/blog-placeholder-about.jpg";
+import { Content } from "../content/about.mdx";
+---
+
+<Layout
+	title="About Georgie"
+	description="Bland is the name of the game, and she wants to play the game with you."
+	pubDate={new Date("2025-07-21")}
+	heroImage={AboutHeroImage}
+>
+	<style>
+		.hero-image {
+			width: 100%;
+			height: auto;
+			aspect-ratio: 16 / 9;
+			object-fit: cover;
+			object-position: 50% 100%;
+		}
+		.hero-image img {
+			display: block;
+			margin: 0 auto;
+			border-radius: 12px;
+			box-shadow: var(--box-shadow);
+		}
+	</style>
+	<Content />
+	<div class="intro-image">
+		<img src="/images/gorgzilla.jpeg" class="hero-image" />
+	</div>
+</Layout>

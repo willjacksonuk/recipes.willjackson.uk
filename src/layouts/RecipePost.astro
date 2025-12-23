@@ -1,0 +1,102 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import { Image } from "astro:assets";
+
+type Props = CollectionEntry<"blog">["data"];
+
+const { title, description, pubDate, heroImage, tags = [] } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			main {
+				width: calc(100% - 2em);
+				max-width: 100%;
+				margin: 0;
+			}
+			article {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 1em;
+				color: rgb(var(--gray-dark));
+			}
+			.hero-image {
+				width: 100%;
+			}
+			.hero-image img {
+				display: block;
+				margin: 0 auto;
+				border-radius: 12px;
+				box-shadow: var(--box-shadow);
+			}
+			.title {
+				margin-bottom: 1em;
+				padding: 1em 0;
+				text-align: left;
+				line-height: 1;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
+			}
+			.date {
+				margin-bottom: 0.5em;
+				color: rgb(var(--gray));
+			}
+			.last-updated-on {
+				font-style: italic;
+			}
+			.tag-list {
+				display: flex;
+				flex-wrap: wrap; /* allows pills to wrap on smaller screens */
+				gap: 0.5rem; /* space between pills */
+				justify-content: flex-start;
+				padding-top: 0.5rem;
+			}
+
+			.tag-list a {
+				display: inline-block;
+				padding: 0.3em 0.8em;
+				border: solid;
+				border-width: 1px;
+				border-radius: 9999px;
+				border-color: var(--accent);
+				color: var(--accent);
+				font-size: 0.9rem;
+				text-decoration: none;
+				line-height: 1.7;
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article>
+				{
+					/* Uncomment to enable hero image 
+				<div class="hero-image">
+					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
+				</div>
+				*/
+				}
+				<div class="title">
+					<h1>{title}</h1>
+					<hr />
+					{/* Tags */}
+					<div class="tag-list">
+						{tags.map((tag) => <a href={`/tags/${tag}/`}>{tag}</a>)}
+					</div>
+				</div>
+				<slot />
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
