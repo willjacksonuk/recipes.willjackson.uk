@@ -91,7 +91,7 @@ const { title, description, pubDate, heroImage, tags = [] } = Astro.props;
 					<hr />
 					{/* Tags */}
 					<div class="tag-list">
-						{tags.map((tag) => <a href={`/tags/${tag}/`}>{tag}</a>)}
+						{tags.map((tag : string) => <a href={`/tags/${tag}/`}>{tag}</a>)}
 					</div>
 				</div>
 				<slot />
